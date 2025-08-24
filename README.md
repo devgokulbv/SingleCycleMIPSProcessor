@@ -23,11 +23,11 @@ This diagram provides a visual reference for instruction flow, control signal ro
 | Module             | Description                                                                 |
 |--------------------|-----------------------------------------------------------------------------|
 | `ALU.v`            | Performs arithmetic and logical operations based on control signals         |
-| `ControlUnit.v`    | Generates control signals based on instruction opcode and function field    |
+| `Controller.v`     | Generates control signals based on instruction opcode and function field    |
 | `Datapath.v`       | Connects registers, ALU, memory, and control signals to execute instructions|
-| `InstructionMem.v` | Stores and supplies instructions to the processor                           |
-| `DataMem.v`        | Handles read/write operations for data memory                               |
-| `Testbench.v`      | Simulates processor behavior and verifies output correctness                |
+| `InstructionMemory.v` | Stores and supplies instructions to the processor                           |
+| `DataMemory.v`        | Handles read/write operations for data memory                               |
+| `Mips_tb.v`      | Simulates processor behavior and verifies output correctness                |
 
 ## Simulation Strategy
 
@@ -47,6 +47,4 @@ This diagram provides a visual reference for instruction flow, control signal ro
 
 All modules are documented with inline comments and markdown descriptions. Refer to the `/docs` folder for detailed architecture notes and design decisions.
 
-## License
 
-This project is released under the MIT License.
