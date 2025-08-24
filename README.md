@@ -1,99 +1,52 @@
-# 🧠 SingleCycleMIPSProcessor
+# Single-Cycle MIPS Processor
 
-This project implements a modular **MIPS single-cycle processor** in Verilog. It supports a subset of MIPS instructions and is designed for clarity, correctness, and simulation-driven debugging. All components are built from scratch and verified through waveform analysis and testbenches.
+This project implements a modular single-cycle MIPS processor in Verilog. It includes core components such as the ALU, control unit, datapath, instruction memory, and data memory, along with comprehensive testbenches for simulation and verification.
 
----
+## Features
 
-## 📁 Directory Structure
+- Modular design with clean separation of datapath and control logic
+- Support for R-type, I-type, and basic branching instructions
+- Preloaded instruction and data memory for simulation
+- Waveform analysis and output trace verification
+- Fully documented modules and simulation strategy
 
-```
-├── src/
-│   ├── alu.v
-│   ├── control_unit.v
-│   ├── datapath.v
-│   ├── instruction_memory.v
-│   ├── data_memory.v
-│   ├── register_file.v
-│   └── top.v
-├── testbench/
-│   ├── tb_single_cycle.v
-│   └── dump.vcd
-├── programs/
-│   └── preload.hex
-└── README.md
-```
+## Architecture Diagram
 
----
+The following diagram illustrates the high-level structure of the Single-Cycle MIPS Processor, showing how the control unit, datapath, ALU, and memory modules interact:
 
-## ⚙️ Features
+![MIPS Processor Architecture](MIPSProcessor.png)
 
-- ✅ **Single-Cycle Execution**: Each instruction completes in one clock cycle.
-- ✅ **Instruction Support**:
-  - Arithmetic: `ADD`, `SUB`, `ADDU`, `SUBU`
-  - Logical: `AND`, `OR`, `XOR`, `NOR`
-  - Shift: `SLL`, `SRL`, `SRA`, `SLLV`, `SRLV`
-  - Memory: `LW`, `SW`
-  - Control: `BEQ`, `J`
-- ✅ **Signed Arithmetic**: Uses `$signed()` and `>>>` for correct shift behavior.
-- ✅ **Modular Design**: ALU, control unit, register file, and memory are independently testable.
-- ✅ **Waveform Debugging**: Output traces and zero flags are observable in simulation.
+This diagram provides a visual reference for instruction flow, control signal routing, and datapath connectivity. It is particularly useful during debugging and when extending the design to support pipelined execution.
 
----
+## Module Overview
 
-## 🧪 Simulation Instructions
+| Module             | Description                                                                 |
+|--------------------|-----------------------------------------------------------------------------|
+| `ALU.v`            | Performs arithmetic and logical operations based on control signals         |
+| `ControlUnit.v`    | Generates control signals based on instruction opcode and function field    |
+| `Datapath.v`       | Connects registers, ALU, memory, and control signals to execute instructions|
+| `InstructionMem.v` | Stores and supplies instructions to the processor                           |
+| `DataMem.v`        | Handles read/write operations for data memory                               |
+| `Testbench.v`      | Simulates processor behavior and verifies output correctness                |
 
-### 🔧 Compile and Run
-```bash
-iverilog -o sim.out src/*.v testbench/tb_single_cycle.v
-vvp sim.out
-```
+## Simulation Strategy
 
-### 🔍 View Waveform
-```bash
-gtkwave dump.vcd
-```
+- Use waveform viewers (e.g., GTKWave) to inspect signal transitions
+- Verify register updates and memory access patterns
+- Check control signal propagation and ALU outputs
+- Compare expected vs. actual output traces for each instruction
 
----
+## Getting Started
 
-## 📄 File Descriptions
+1. Clone the repository and navigate to the project directory.
+2. Compile the Verilog files using your preferred simulator (e.g., ModelSim, Icarus Verilog).
+3. Run the testbench and inspect the waveform output.
+4. Modify instruction and data memory contents to test additional scenarios.
 
-### 🔧 Source Files (`src/`)
-- `alu.v`: Performs arithmetic, logical, and shift operations. Supports 6-bit ALUControl decoding.
-- `control_unit.v`: Decodes opcode and generates control signals.
-- `datapath.v`: Connects all modules and routes control signals and data.
-- `instruction_memory.v`: Holds preloaded instructions from `preload.hex`.
-- `data_memory.v`: Simulates RAM for `LW` and `SW`.
-- `register_file.v`: Implements 32 registers with dual-read and single-write ports.
-- `top.v`: Top-level integration of all modules.
+## Documentation
 
-### 🧪 Testbench Files (`testbench/`)
-- `tb_single_cycle.v`: Simulates processor behavior and dumps waveform.
-- `dump.vcd`: Generated waveform file for GTKWave or ModelSim.
+All modules are documented with inline comments and markdown descriptions. Refer to the `/docs` folder for detailed architecture notes and design decisions.
 
-### 📦 Program Files (`programs/`)
-- `preload.hex`: Contains machine code instructions in hex format.
+## License
 
----
-
-## 🧠 Design Philosophy
-
-- **Minimalism**: Clean, readable modules with no redundant logic.
-- **Correctness First**: Focused on simulation accuracy and control signal integrity.
-- **Iterative Debugging**: Silent logic errors are caught via waveform inspection.
-- **Modularity**: Each component is independently verifiable and reusable.
-
----
-
-## ✍️ Author
-
-**Devgokul**  
-Digital design enthusiast focused on simulation-driven refinement, waveform debugging, and clean modular architecture.
-
----
-
-## 📚 Future Enhancements
-
-- Add support for `SLT`, `BNE`, and `JAL`.
-- Expand ALUControl to support more R-type instructions.
-- Integrate exception handling for overflow detection (`ADD` vs `ADDU`).
-- Prepare for pipelined extension with stage separation and hazard control.
+This project is released under the MIT License.
